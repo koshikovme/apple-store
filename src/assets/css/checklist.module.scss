@@ -1,0 +1,17 @@
+.Form {
+  display: flex;
+  flex-direction: column;
+  .Label, .Name {
+    margin: 10px;
+  }
+
+  .Name, .Label {
+    font-family: 'SF Pro Display', sans-serif;
+  }
+
+  .CheckBox {
+    margin: 10px;
+  }
+
+
+}

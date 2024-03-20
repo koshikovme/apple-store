@@ -1,0 +1,31 @@
+@import url('https://fonts.cdnfonts.com/css/sf-pro-display');
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  margin: 0;
+  padding: 0;
+
+  position: relative;
+  z-index: 1;
+}
+
+.Image {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.Word {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  font-family: 'SF Pro Display', sans-serif;
+  color: white;
+  font-size: 48px;
+}
