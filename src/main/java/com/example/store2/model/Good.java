@@ -1,8 +1,10 @@
 package com.example.store2.model;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.sql.Blob;
+import java.util.Base64;
 
 @Entity // This tells Hibernate to make a table out of this class
 public class Good {
@@ -20,6 +22,15 @@ public class Good {
     private Integer modelYear;
 
     private String characteristics;
+
+    @Getter
+    @Setter
+    private byte[] image;
+
+    @Setter
+    @Getter
+    @Transient
+    private String imageBase64;
 
     public Integer getGood_id() {
         return good_id;
@@ -76,4 +87,5 @@ public class Good {
     public void setCharacteristics(String characteristics) {
         this.characteristics = characteristics;
     }
+
 }

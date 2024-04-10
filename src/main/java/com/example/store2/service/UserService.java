@@ -5,7 +5,9 @@ import com.example.store2.dtos.SignUpDto;
 import com.example.store2.dtos.UserDto;
 import com.example.store2.exceptions.AppException;
 import com.example.store2.mappers.UserMapper;
+import com.example.store2.model.Role;
 import com.example.store2.model.User;
+import com.example.store2.repo.OrdersRepo;
 import com.example.store2.repo.UserRepo;
 import org.hibernate.id.GUIDGenerator;
 import org.springframework.data.domain.Page;
@@ -26,10 +28,14 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     private final UserMapper userMapper;
-    public UserService(UserRepo userRepository, PasswordEncoder passwordEncoder, UserMapper userMapper, UserRepo userRepo) {
+
+    private final OrdersRepo orderRepo;
+
+    public UserService(UserRepo userRepository, PasswordEncoder passwordEncoder, UserMapper userMapper, UserRepo userRepo, OrdersRepo orderRepo) {
         this.userRepo = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userMapper = userMapper;
+        this.orderRepo = orderRepo;
     }
 
     public UserDto login(CredentialsDto credentialsDto) {
@@ -37,7 +43,17 @@ public class UserService {
                 .orElseThrow(() -> new AppException("Unknown user", HttpStatus.NOT_FOUND));
 
         if (passwordEncoder.matches(CharBuffer.wrap(credentialsDto.getPassword()), user.getPassword())) {
-            return userMapper.toUserDto(user);
+            return new UserDto(
+                    user.getId(),
+                    user.getFirstName(),
+                    user.getLastName(),
+                    user.getPhoneNumber(),
+                    user.getLogin(),
+                    user.getPassword(),
+                    user.getRole(),
+                    "",
+                    user.getUser_id()
+                    );
         }
         throw new AppException("Invalid password", HttpStatus.BAD_REQUEST);
     }
@@ -49,15 +65,25 @@ public class UserService {
             throw new AppException("Login already exists", HttpStatus.BAD_REQUEST);
         }
 
-        User user = userMapper.signUpToUser(userDto);
-        user.setPassword(passwordEncoder.encode(CharBuffer.wrap(userDto.getPassword())));
-        user.setSecond_name(userDto.getLastName());
-        user.setFirst_name(user.getFirst_name());
+        User user = new User();
         user.setLogin(userDto.getLogin());
+        user.setLastName(userDto.getLastName());
+        user.setFirstName(userDto.getFirstName());
+        user.setPhoneNumber(Integer.valueOf(userDto.getPhoneNumber()));
+        user.setPassword(passwordEncoder.encode(CharBuffer.wrap(userDto.getPassword())));
+        user.setRole(Role.USER);
 
         User savedUser = userRepo.save(user);
 
-        return userMapper.toUserDto(savedUser);
+        return new UserDto(
+                savedUser.getFirstName(),
+                savedUser.getLastName(),
+                savedUser.getPhoneNumber(),
+                savedUser.getLogin(),
+                savedUser.getPassword(),
+                savedUser.getRole(),
+                "",
+                1L);
     }
 
     public UserDto findByLogin(String login) {
@@ -66,16 +92,37 @@ public class UserService {
         return userMapper.toUserDto(user);
     }
 
+    public UserDto findById(long id) {
+        User user = userRepo.findUserById(id);
+        return new UserDto(
+                user.getId(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getPhoneNumber(),
+                user.getLogin(),
+                user.getPassword(),
+                user.getRole(),
+                "",
+                1L);
+    }
+
+
     public void createUser(User u) {
         userRepo.createUser(u);
     }
 
-    public void editUser(String firstname, String lastname, Integer userId) {
-        userRepo.editUser(firstname, lastname, userId);
+    public void editUser(String firstname,
+                         String lastname,
+                         Integer phone,
+                         String login,
+                         String password,
+                         Long userId) {
+        userRepo.editUser(firstname, lastname, phone, login, password, userId);
     }
 
 
     public void deleteUserById(Long id) {
+        orderRepo.deleteOrdersByUserId(id);
         userRepo.deleteUserById(id);
     }
 
@@ -85,6 +132,14 @@ public class UserService {
 
     public Page<User> findUsersByLogin(String login, Pageable pageable) {
         return userRepo.findUsersByLogin(login, pageable);
+    }
+
+    public void createSession(long id) {
+        userRepo.createSession(id);
+    }
+
+    public void deleteSession(int id) {
+        userRepo.deleteSession(id);
     }
 
 }

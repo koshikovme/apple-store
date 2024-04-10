@@ -8,10 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class GoodService {
@@ -46,6 +43,11 @@ public class GoodService {
         List<Good> goods = new ArrayList<>();
         for (String name : names) {
             Page<Good> goodsPage = goodRepo.findGoodsByNamesStartingWith(name, pageable);
+            goodsPage.getContent().forEach(good -> {
+                byte[] imageBytes = good.getImage(); // Assuming getImage returns byte[] or Blob
+                String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+                good.setImageBase64(base64Image); // Set Base64 encoded image string to a new field
+            });
             goods.addAll(goodsPage.getContent());
         }
         return new PageImpl<>(goods, pageable, goods.size());
@@ -56,7 +58,21 @@ public class GoodService {
         return goodRepo.findAll(pageable);
     }
 
-    public Page<Good> searchGoods(String name, int minPrice, int maxPrice,int startYear, int endYear ,Pageable pageable) {
-        return goodRepo.searchGoods(name, minPrice, maxPrice, startYear, endYear, pageable);
+//    public Page<Good> searchGoods(String name, int minPrice, int maxPrice,int startYear, int endYear ,Pageable pageable) {
+//        return goodRepo.searchGoods(name, minPrice, maxPrice, startYear, endYear, pageable);
+//    }
+
+
+    public Page<Good> searchGoods(String name, int minPrice, int maxPrice, int startYear, int endYear, Pageable pageable) {
+        Page<Good> goods = goodRepo.searchGoods(name, minPrice, maxPrice, startYear, endYear, pageable);
+
+        // Convert Blob to Base64 for each Good object
+        goods.getContent().forEach(good -> {
+            byte[] imageBytes = good.getImage(); // Assuming getImage returns byte[] or Blob
+            String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+            good.setImageBase64(base64Image); // Set Base64 encoded image string to a new field
+        });
+
+        return goods;
     }
 }

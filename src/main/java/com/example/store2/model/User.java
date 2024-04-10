@@ -13,13 +13,15 @@ import java.util.UUID;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
     private Long user_id;
 
-    private String first_name;
+    private String firstName;
 
-    private String second_name;
+    private String lastName;
 
-    private Integer phone_number;
+    private Integer phoneNumber;
 
     private String login;
 
@@ -27,7 +29,4 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private Role role;
-
-    @Enumerated(EnumType.STRING)
-    private Status status;
 }

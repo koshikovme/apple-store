@@ -5,6 +5,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -13,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-public interface GoodRepo extends PagingAndSortingRepository<Good, Integer> {
+public interface GoodRepo extends PagingAndSortingRepository<Good, Integer>, JpaRepository<Good, Integer> {
 
     @Modifying
     @Transactional
@@ -47,4 +48,6 @@ public interface GoodRepo extends PagingAndSortingRepository<Good, Integer> {
     @Query("SELECT g FROM Good g WHERE g.name LIKE :namePrefix%")
     Page<Good> findGoodsByNamesStartingWith(@Param("namePrefix") String namePrefix, Pageable pageable);
 
+    @Query("SELECT g FROM Good g WHERE g.good_id IN :goodIds")
+    Page<Good> findGoodsByGoodIds(@Param("goodIds") List<Long> goodIds, Pageable pageable);
 }

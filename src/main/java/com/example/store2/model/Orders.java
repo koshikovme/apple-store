@@ -4,18 +4,20 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Setter
 @Getter
-@Entity // This tells Hibernate to make a table out of this class
+@Entity
 public class Orders {
     @Id
-    private Integer orderId;
+    private Long orderId;
 
-    private String orderDate;
+    private LocalDate orderDate;
 
-    private Integer qty;
+    private Long qty;
 
-    private Integer price;
+    private Long price;
 
-    private Integer userId;
+    private Long userId;
 }
