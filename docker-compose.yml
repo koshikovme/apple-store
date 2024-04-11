@@ -49,7 +49,7 @@ services:
     networks:
       - springapimysql-net
     environment:
-      - spring.datasource.url=jdbc:mysql://mysqldb:3307/electronicsstore
+      - spring.datasource.url=jdbc:mysql://mysqldb:3306/electronicsstore
     depends_on:
       - mysqldb
 
