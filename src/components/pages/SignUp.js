@@ -1,22 +1,28 @@
 import React, { useState } from 'react';
+import { useNavigate  } from 'react-router-dom'; // Import useHistory hook
 import axios from 'axios';
 import classes from "../../assets/css/auth.module.scss";
-import { request, setAuthHeader } from '../axios_helper/AxiosHelper';
+import { request, setAuthHeader } from '../helpers/AxiosHelper';
 
 
 const SignUp = () => {
-    const [username, setUsername] = useState('');
-    const [firstname, setFirstname] = useState('');
-    const [lastname, setLastname] = useState('');
-    const [phone, setPhone] = useState('');
+    const navigate = useNavigate(); // Initialize useHistory hook
+
+    const [login, setLogin] = useState('');
+    const [firstName, setFirstname] = useState('');
+    const [lastName, setLastname] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
     const [password, setPassword] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('/register', { firstname, lastname, username, password}).then(
+            const id = 50;
+            // await axios.post('/login', { username, password });
+            await axios.post('/register', { login, firstName , lastName,phoneNumber, password}).then(
                 (response) => {
-                    setAuthHeader(response.data.token);
+                    console.log("IM HERE")
+                    navigate("/signin");
                 }).catch(
                 (error) => {
                     setAuthHeader(null);
@@ -33,26 +39,26 @@ const SignUp = () => {
             <h1>Register</h1>
             <input className={classes.Input}
                    type="text"
-                   value={username}
-                   onChange={(e) => setUsername(e.target.value)}
+                   value={login}
+                   onChange={(e) => setLogin(e.target.value)}
                    placeholder="Enter username..."
             />
             <input className={classes.Input}
                    type="text"
-                   value={firstname}
+                   value={firstName}
                    onChange={(e) => setFirstname(e.target.value)}
                    placeholder="Enter first name..."
             />
             <input className={classes.Input}
                    type="text"
-                   value={lastname}
+                   value={lastName}
                    onChange={(e) => setLastname(e.target.value)}
                    placeholder="Enter last name..."
             />
             <input className={classes.Input}
                    type="phone"
-                   value={phone}
-                   onChange={(e) => setPhone(e.target.value)}
+                   value={phoneNumber}
+                   onChange={(e) => setPhoneNumber(e.target.value)}
                    placeholder="Enter phone number..."
             />
             <input className={classes.Input}

@@ -1,7 +1,11 @@
 import React from "react";
 
-const ShoppingCartModal = ({ isOpen, onClose, children, goods }) => {
+const MyModal = ({ isOpen, onClose, children, goods }) => {
     if (!isOpen) return null;
+
+    const stopPropagation = (e) => {
+        e.stopPropagation();
+    };
 
     return (
         <div
@@ -19,10 +23,9 @@ const ShoppingCartModal = ({ isOpen, onClose, children, goods }) => {
             }}
         >
             <div
+                onClick={stopPropagation}
                 style={{
                     background: "white",
-                    height: 400,
-                    width: 400,
                     margin: "auto",
                     padding: "2%",
                     border: "2px solid #000",
@@ -38,4 +41,4 @@ const ShoppingCartModal = ({ isOpen, onClose, children, goods }) => {
     );
 };
 
-export default ShoppingCartModal;
+export default MyModal;

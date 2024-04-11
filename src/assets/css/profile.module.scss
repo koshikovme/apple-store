@@ -1,0 +1,53 @@
+.Container {
+  position: relative;
+}
+
+.MainImage {
+  max-height: 400px;
+}
+
+.test {
+  position: relative;
+  top: 30%;
+  left: 0;
+  .Avatar {
+    position: absolute;
+    width: 300px;
+    bottom: 0;
+    margin: 0;
+    padding: 0;
+  }
+
+  h3 {
+    font-family: 'SF Pro Display', sans-serif;
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.ProfileInfo {
+  font-family: 'SF Pro Display', sans-serif;
+  font-weight: bolder;
+  margin: 20px;
+}
+
+.ProfileCard > * {
+  margin: 20px;
+}
+
+
+.OrderHistory {
+  margin: 20px;
+
+  td {
+    padding: 20px;
+  }
+
+  th {
+    padding: 20px;
+  }
+
+}

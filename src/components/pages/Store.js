@@ -1,10 +1,10 @@
 import React from 'react';
 import StoreList from "../layouts/StoreList";
 
-const Store = () => {
+const Store = ({loggedIn}) => {
     return (
         <div>
-            <StoreList/>
+            <StoreList loggedIn={loggedIn}/>
         </div>
     );
 };

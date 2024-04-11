@@ -10,9 +10,10 @@ const Good = (props) => {
             <img src={img} alt="Good" className={classes.Image}/>
             <p className={classes.Text}>{model}</p>
             <h2 className={classes.Text}>{price}</h2>
-            <MyBtn onClick={addToCart}>Buy</MyBtn>
+            <MyBtn onClick={addToCart}>To cart</MyBtn>
         </div>
     );
 };
+
 
 export default Good;

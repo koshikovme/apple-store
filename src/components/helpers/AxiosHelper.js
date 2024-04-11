@@ -2,6 +2,15 @@ import axios from 'axios';
 
 
 
+export const isAdmin = () => {
+    console.log("answer is : ", window.localStorage.getItem("login") === "admin")
+    return window.localStorage.getItem("login") === "admin";
+};
+
+export const isTokenHere = () => {
+    return window.localStorage.getItem('auth_token') != null;
+}
+
 export const getAuthToken = () => {
     return window.localStorage.getItem('auth_token');
 };
