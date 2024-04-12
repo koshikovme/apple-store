@@ -1,44 +1,3 @@
-#version: '3.8'
-#
-#services:
-#  backend:
-#    image: backend-image
-#    ports:
-#      - "8080:8080"
-#    environment:
-#      - IMAGE_SERVER_BASE_URL=http://localhost:8080
-#    depends_on:
-#      mysql:
-#        condition: service_healthy
-#    networks:
-#      - app-network
-#
-#  mysql:
-#    image: mysql
-#    restart: always
-#    command: --default-authentication-plugin=mysql_native_password
-#    deploy:
-#        replicas: 1
-#    ports: ['3306:3306']
-#    environment:
-#      MYSQL_ROOT_PASSWORD: "1234"  # Specify your desired root password here
-#      MYSQL_DATABASE: "electronicsstore"
-#
-#    volumes:
-#      - ./mysql_local.cnf:/etc/mysql/conf.d/mysql_local.cnf:ro
-#    healthcheck:
-#      test: mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD
-#      start_period: 5s
-#      interval: 5s
-#      timeout: 5s
-#      retries: 55
-#    networks:
-#      - app-network
-#
-#networks:
-#  app-network:
-#    driver: bridge
-
 version: "3.7"
 services:
   api_service:
@@ -53,6 +12,8 @@ services:
       - DATABASE_PASSWORD=1234
       - DATABASE_URL=jdbc:mysql://store2-mysqldb-1:3306/electronicsstore?createDatabaseIfNotExist=true
       - DATABASE_DRIVER=com.mysql.cj.jdbc.Driver
+#      - spring.datasource.url=jdbc:mysql://mysqldb:3306/electronicsstore?createDatabaseIfNotExist=true
+
     depends_on:
       - mysqldb
 
@@ -68,7 +29,6 @@ services:
       - springapimysql-net
     environment:
       MYSQL_USER: admin
-      # MYSQL_DATABASE: electronicsstore
       MYSQL_ROOT_PASSWORD: 1234
       MYSQL_PASSWORD: 1234
     volumes:
