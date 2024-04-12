@@ -51,7 +51,7 @@ services:
     environment:
       - DATABASE_USER=admin
       - DATABASE_PASSWORD=1234
-      - DATABASE_URL=jdbc:mysql://store2-mysqldb-1:3306/electronicsstore?useSSL=false&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true
+      - DATABASE_URL=jdbc:mysql://store2-mysqldb-1:3306/electronicsstore?createDatabaseIfNotExist=true
       - DATABASE_DRIVER=com.mysql.cj.jdbc.Driver
     depends_on:
       - mysqldb
