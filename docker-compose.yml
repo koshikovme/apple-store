@@ -49,7 +49,10 @@ services:
     networks:
       - springapimysql-net
     environment:
-      - spring.datasource.url=jdbc:mysql://mysqldb:3307/electronicsstore
+      - DATABASE_USER=admin
+      - DATABASE_PASSWORD=1234
+      - DATABASE_URL=jdbc:mysql://store2-mysqldb-1:3306/electronicsstore?useSSL=false&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true
+      - DATABASE_DRIVER=com.mysql.cj.jdbc.Driver
     depends_on:
       - mysqldb
 
