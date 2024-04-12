@@ -68,7 +68,7 @@ services:
       - springapimysql-net
     environment:
       MYSQL_USER: admin
-      MYSQL_DATABASE: electronicsstore
+      # MYSQL_DATABASE: electronicsstore
       MYSQL_ROOT_PASSWORD: 1234
       MYSQL_PASSWORD: 1234
     volumes:
