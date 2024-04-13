@@ -14,6 +14,8 @@ RUN mvn clean package
 FROM eclipse-temurin:17-jdk-jammy
 WORKDIR /app
 COPY --from=build /app/target/*.jar ./store2.jar
+COPY electronicsstore.sql /docker-entrypoint-initdb.d/electronicsstore.sql
+
 
 
 EXPOSE 8080
