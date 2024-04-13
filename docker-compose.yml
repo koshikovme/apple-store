@@ -8,10 +8,11 @@ services:
     networks:
       - springapimysql-net
     environment:
-      - DATABASE_USER=admin
-      - DATABASE_PASSWORD=1234
-      - DATABASE_URL=jdbc:mysql://store2-mysqldb-1:3306/electronicsstore?createDatabaseIfNotExist=true
-      - DATABASE_DRIVER=com.mysql.cj.jdbc.Driver
+#      - DATABASE_USER=admin
+#      - DATABASE_PASSWORD=1234
+#      - DATABASE_URL=jdbc:mysql://store2-mysqldb-1:3306/electronicsstore?createDatabaseIfNotExist=true
+#      - DATABASE_DRIVER=com.mysql.cj.jdbc.Driver
+      - spring.datasource.url=jdbc:mysql://mysqldb:3306/electronicsstore
 
     depends_on:
       - mysqldb
@@ -27,6 +28,7 @@ services:
     networks:
       - springapimysql-net
     environment:
+      MYSQL_DATABASE: electronicsstore
       MYSQL_USER: admin
       MYSQL_ROOT_PASSWORD: 1234
       MYSQL_PASSWORD: 1234
